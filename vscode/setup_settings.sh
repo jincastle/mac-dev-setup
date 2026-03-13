@@ -44,9 +44,32 @@ cat > "$SETTINGS_FILE" << 'SETTINGS_EOF'
   "git.autofetch": true,
 
   // 기본 터미널 프로필 (macOS)
-  "terminal.integrated.defaultProfile.osx": "zsh"
+  "terminal.integrated.defaultProfile.osx": "zsh",
+
+  // 내장 터미널 폰트 (아이콘 정상 표시; Cursor는 "MesloLGS NF" 인식 잘 함)
+  "terminal.integrated.fontFamily": "MesloLGS NF, MesloLGS Nerd Font Mono",
+
+  // 에디터+터미널 색 테마 (선택)
+  "workbench.colorTheme": "Dracula"
 }
 SETTINGS_EOF
 
 echo "settings.json 적용 완료: $SETTINGS_FILE"
-echo "VSCode를 다시 열거나 창을 새로고침하면 적용됩니다."
+
+# Cursor에도 동일 설정 적용 (폴더 없으면 생성 후 기록)
+CURSOR_USER_DIR="$HOME/Library/Application Support/Cursor/User"
+CURSOR_SETTINGS="$CURSOR_USER_DIR/settings.json"
+mkdir -p "$CURSOR_USER_DIR"
+if [ -f "$CURSOR_SETTINGS" ]; then
+  cp "$CURSOR_SETTINGS" "${CURSOR_SETTINGS}.backup.$(date +%Y%m%d_%H%M%S)"
+fi
+cat > "$CURSOR_SETTINGS" << 'CURSOR_SETTINGS_EOF'
+{
+  // Cursor에는 폰트 설정만 적용
+  "terminal.integrated.fontFamily": "MesloLGS NF, MesloLGS Nerd Font Mono"
+}
+CURSOR_SETTINGS_EOF
+
+echo "Cursor settings.json 적용: $CURSOR_SETTINGS"
+
+echo "VSCode/Cursor를 다시 열거나 창을 새로고침하면 적용됩니다."

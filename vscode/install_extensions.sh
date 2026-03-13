@@ -35,4 +35,7 @@ code --install-extension bradlc.vscode-tailwindcss
 # Java
 code --install-extension vscjava.vscode-java-pack
 
+# 색테마
+code --install-extension dracula-theme.theme-dracula
+
 echo "All extensions installed."
